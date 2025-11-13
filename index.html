@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ФВК - Бетонные работы</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo-link">
+                    <img src="image.jpg" alt="ФВК Логотип" class="logo">
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="calculator.html">Калькулятор</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <h1>Строительная компания "ФВК"</h1>
+            <p>Профессиональные бетонные работы любой сложности</p>
+            
+            <img src="beton.gif" alt="Строительные работы" class="construction-gif">
+
+            <h2>О нашей компании</h2>
+            <p>Компания "ФВК" более 15 лет успешно работает на строительном рынке, специализируясь на бетонных работах. Мы гарантируем качество и соблюдение сроков.</p>
+
+            <div class="highlight">
+                <h3>Наши преимущества:</h3>
+                <ul>
+                    <li>Опыт работы более 15 лет</li>
+                    <li>Современное оборудование</li>
+                    <li>Квалифицированные специалисты</li>
+                    <li>Гарантия на все виды работ</li>
+                    <li>Конкурентные цены</li>
+                </ul>
+            </div>
+
+            <h2>Этапы сотрудничества:</h2>
+            <ol>
+                <li>Бесплатная консультация и выезд специалиста</li>
+                <li>Составление сметы и заключение договора</li>
+                <li>Выполнение работ в согласованные сроки</li>
+                <li>Сдача объекта и гарантийное обслуживание</li>
+            </ol>
+
+            <h2>Контактная информация</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Отдел</th>
+                        <th class="priority-low">Телефон</th>
+                        <th>Email</th>
+                        <th class="priority-low">Время работы</th>
+                    </tr>
+                    <tr>
+                        <td>Отдел продаж</td>
+                        <td class="priority-low">+7 (999) 123-45-67</td>
+                        <td>sales@fvk.ru</td>
+                        <td class="priority-low">9:00 - 18:00</td>
+                    </tr>
+                    <tr>
+                        <td>Техническая поддержка</td>
+                        <td class="priority-low">+7 (999) 123-45-68</td>
+                        <td>support@fvk.ru</td>
+                        <td class="priority-low">8:00 - 20:00</td>
+                    </tr>
+                    <tr>
+                        <td>Срочные заказы</td>
+                        <td class="priority-low">+7 (999) 123-45-69</td>
+                        <td>emergency@fvk.ru</td>
+                        <td class="priority-low">24/7</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>Наше местоположение</h2>
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A1a70e4e4d8b1b9d8e8e8e8e8e8e8e8e8e8&amp;source=constructor" frameborder="0"></iframe>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Строительная компания "ФВК". Все права защищены.</p>
+            <p id="current-date"></p>
+        </div>
+    </footer>
+
+    <script>
+        // Использование объекта Date
+        const currentDate = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            weekday: 'long'
+        };
+        document.getElementById('current-date').textContent = 
+            'Сегодня: ' + currentDate.toLocaleDateString('ru-RU', options);
+    </script>
+</body>
+</html>

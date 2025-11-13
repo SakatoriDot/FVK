@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги - ФВК</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo-link">
+                    <img src="image.jpg" alt="ФВК Логотип" class="logo">
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="calculator.html">Калькулятор</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <h1>Наши услуги</h1>
+
+            <div class="service-selector">
+                <h2>Выберите тип услуги:</h2>
+                <select id="serviceType" onchange="showServiceInfo()">
+                    <option value="">-- Выберите услугу --</option>
+                    <option value="foundation">Заливка фундамента</option>
+                    <option value="floor">Бетонные полы</option>
+                    <option value="walls">Бетонные стены</option>
+                    <option value="stairs">Бетонные лестницы</option>
+                    <option value="decorative">Декоративный бетон</option>
+                </select>
+            </div>
+
+            <div id="serviceInfo" class="result" style="display: none;">
+                <!-- Информация будет загружаться динамически -->
+            </div>
+
+            <h2>Все виды бетонных работ</h2>
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>Услуга</th>
+                        <th class="priority-low">Описание</th>
+                        <th>Срок выполнения</th>
+                        <th>Стоимость (за м²)</th>
+                    </tr>
+                    <tr>
+                        <td>Заливка фундамента</td>
+                        <td class="priority-low">Устройство ленточных, плитных и свайных фундаментов</td>
+                        <td>5-15 дней</td>
+                        <td>от 2 500 руб.</td>
+                    </tr>
+                    <tr>
+                        <td>Бетонные полы</td>
+                        <td class="priority-low">Промышленные полы, стяжка, упрочнение поверхности</td>
+                        <td>3-7 дней</td>
+                        <td>от 1 800 руб.</td>
+                    </tr>
+                    <tr>
+                        <td>Бетонные стены</td>
+                        <td class="priority-low">Монолитные стены, перегородки, ограждения</td>
+                        <td>7-14 дней</td>
+                        <td>от 3 200 руб.</td>
+                    </tr>
+                    <tr>
+                        <td>Бетонные лестницы</td>
+                        <td class="priority-low">Внутренние и наружные лестницы любой сложности</td>
+                        <td>10-20 дней</td>
+                        <td>от 15 000 руб.</td>
+                    </tr>
+                    <tr>
+                        <td>Декоративный бетон</td>
+                        <td class="priority-low">Штампованный, цветной, полированный бетон</td>
+                        <td>5-10 дней</td>
+                        <td>от 4 500 руб.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2>Используемые материалы</h2>
+            <ul>
+                <li>Бетон марки М200-М500</li>
+                <li>Арматура класса А1-А3</li>
+                <li>Пластификаторы и добавки</li>
+                <li>Гидроизоляционные материалы</li>
+                <li>Уплотнительные смеси</li>
+            </ul>
+
+            <h2>Технологический процесс</h2>
+            <ol>
+                <li>Подготовка основания</li>
+                <li>Установка опалубки</li>
+                <li>Армирование конструкции</li>
+                <li>Приготовление бетонной смеси</li>
+                <li>Заливка бетона</li>
+                <li>Уплотнение вибраторами</li>
+                <li>Уход за бетоном</li>
+                <li>Демонтаж опалубки</li>
+            </ol>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Строительная компания "ФВК". Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Использование объекта String и интерактивное меню
+        function showServiceInfo() {
+            const serviceSelect = document.getElementById('serviceType');
+            const serviceInfo = document.getElementById('serviceInfo');
+            const selectedValue = serviceSelect.value;
+
+            if (!selectedValue) {
+                serviceInfo.style.display = 'none';
+                return;
+            }
+
+            const services = {
+                foundation: {
+                    title: "Заливка фундамента",
+                    description: "Профессиональная заливка всех типов фундаментов с гарантией качества.",
+                    details: "Мы выполняем работы по устройству ленточных, плитных, свайных и столбчатых фундаментов. Используем только качественные материалы и современное оборудование.",
+                    price: "от 2 500 руб./м²"
+                },
+                floor: {
+                    title: "Бетонные полы",
+                    description: "Создание прочных и долговечных бетонных полов для любых помещений.",
+                    details: "Специализируемся на промышленных полах, стяжках с упрочненным верхним слоем. Гарантируем ровность и прочность поверхности.",
+                    price: "от 1 800 руб./м²"
+                },
+                walls: {
+                    title: "Бетонные стены",
+                    description: "Возведение монолитных бетонных стен и перегородок.",
+                    details: "Строим несущие стены, перегородки, ограждающие конструкции. Применяем современные технологии опалубочных работ.",
+                    price: "от 3 200 руб./м²"
+                },
+                stairs: {
+                    title: "Бетонные лестницы",
+                    description: "Изготовление бетонных лестниц любой конфигурации и сложности.",
+                    details: "Проектируем и строим внутренние и наружные лестницы. Обеспечиваем точность геометрии и качество отделки.",
+                    price: "от 15 000 руб./за ступень"
+                },
+                decorative: {
+                    title: "Декоративный бетон",
+                    description: "Создание эстетичных и функциональных поверхностей из декоративного бетона.",
+                    details: "Штампованный, цветной, полированный бетон для ландшафтного дизайна и интерьеров. Широкий выбор текстур и цветов.",
+                    price: "от 4 500 руб./м²"
+                }
+            };
+
+            const service = services[selectedValue];
+            
+            // Использование методов String
+            let infoHTML = `
+                <h3>${service.title.toUpperCase()}</h3>
+                <p><strong>Описание:</strong> ${service.description}</p>
+                <p><strong>Подробности:</strong> ${service.details}</p>
+                <p><strong>Стоимость:</strong> ${service.price}</p>
+                <p><strong>Длина описания:</strong> ${service.description.length} символов</p>
+            `;
+
+            serviceInfo.innerHTML = infoHTML;
+            serviceInfo.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

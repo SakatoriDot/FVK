@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор - ФВК</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo-link">
+                    <img src="image.jpg" alt="ФВК Логотип" class="logo">
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="calculator.html">Калькулятор</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <h1>Калькулятор стоимости работ</h1>
+
+            <div class="calculator-form">
+                <h2>Добавить проект</h2>
+                <form id="projectForm">
+                    <div class="form-group">
+                        <label for="projectName">Название проекта:</label>
+                        <input type="text" id="projectName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="concreteVolume">Объем бетона (м³):</label>
+                        <input type="number" id="concreteVolume" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="workType">Тип работ:</label>
+                        <select id="workType" required>
+                            <option value="2500">Фундамент - 2 500 руб./м³</option>
+                            <option value="1800">Полы - 1 800 руб./м³</option>
+                            <option value="3200">Стены - 3 200 руб./м³</option>
+                            <option value="4500">Декоративный бетон - 4 500 руб./м³</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="additionalCosts">Дополнительные расходы (руб.):</label>
+                        <input type="number" id="additionalCosts" value="0">
+                    </div>
+                    
+                    <button type="submit">Добавить проект</button>
+                </form>
+            </div>
+
+            <div class="projects-list">
+                <h2>Добавленные проекты</h2>
+                <div class="table-container mobile-simple">
+                    <table id="projectsTable">
+                        <thead>
+                            <tr>
+                                <th>Название проекта</th>
+                                <th>Объем (м³)</th>
+                                <th class="priority-low">Тип работ</th>
+                                <th>Общая стоимость</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projectsBody">
+                            <!-- Проекты будут добавляться динамически -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="statistics">
+                <h2>Статистика по проектам</h2>
+                <div id="statsResults">
+                    <!-- Статистика будет обновляться динамически -->
+                </div>
+            </div>
+
+            <div class="math-calculations">
+                <h2>Дополнительные расчеты (использование Math)</h2>
+                <div class="form-group">
+                    <label for="area">Площадь помещения (м²):</label>
+                    <input type="number" id="area" placeholder="Введите площадь">
+                </div>
+                <div class="form-group">
+                    <label for="thickness">Толщина стяжки (см):</label>
+                    <input type="number" id="thickness" placeholder="Введите толщину">
+                </div>
+                <button onclick="calculateConcrete()">Рассчитать объем бетона</button>
+                <div id="concreteResult" class="result"></div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Строительная компания "ФВК". Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Работа с массивами
+        let projects = [];
+
+        // Обработка формы
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const projectName = document.getElementById('projectName').value;
+            const concreteVolume = parseFloat(document.getElementById('concreteVolume').value);
+            const workType = parseInt(document.getElementById('workType').value);
+            const additionalCosts = parseInt(document.getElementById('additionalCosts').value) || 0;
+            
+            // Расчет стоимости
+            const workCost = concreteVolume * workType;
+            const totalCost = workCost + additionalCosts;
+            
+            // Создание объекта проекта
+            const project = {
+                name: projectName,
+                volume: concreteVolume,
+                workType: workType,
+                workCost: workCost,
+                additionalCosts: additionalCosts,
+                totalCost: totalCost,
+                id: Date.now() // уникальный ID
+            };
+            
+            // Добавление в массив
+            projects.push(project);
+            
+            // Обновление таблицы и статистики
+            updateProjectsTable();
+            updateStatistics();
+            
+            // Очистка формы
+            this.reset();
+        });
+
+        function updateProjectsTable() {
+            const tbody = document.getElementById('projectsBody');
+            tbody.innerHTML = '';
+            
+            projects.forEach(project => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${project.name}</td>
+                    <td>${project.volume.toFixed(2)}</td>
+                    <td class="priority-low">${getWorkTypeName(project.workType)}</td>
+                    <td>${project.totalCost.toFixed(2)} руб.</td>
+                    <td>
+                        <button onclick="deleteProject(${project.id})" class="mobile-btn">Удалить</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getWorkTypeName(workTypeValue) {
+            const types = {
+                2500: 'Фундамент',
+                1800: 'Полы',
+                3200: 'Стены',
+                4500: 'Декоративный бетон'
+            };
+            return types[workTypeValue] || 'Неизвестно';
+        }
+
+        function deleteProject(projectId) {
+            // Использование метода массива filter
+            projects = projects.filter(project => project.id !== projectId);
+            updateProjectsTable();
+            updateStatistics();
+        }
+
+        function updateStatistics() {
+            const statsDiv = document.getElementById('statsResults');
+            
+            if (projects.length === 0) {
+                statsDiv.innerHTML = '<p>Нет добавленных проектов</p>';
+                return;
+            }
+            
+            // Использование методов массива
+            const totalProjects = projects.length;
+            const totalVolume = projects.reduce((sum, project) => sum + project.volume, 0);
+            const totalCost = projects.reduce((sum, project) => sum + project.totalCost, 0);
+            const averageCost = totalCost / totalProjects;
+            
+            // Использование объекта Math
+            const maxCost = Math.max(...projects.map(p => p.totalCost));
+            const minCost = Math.min(...projects.map(p => p.totalCost));
+            
+            statsDiv.innerHTML = `
+                <div class="result">
+                    <h3>Общая статистика:</h3>
+                    <p><strong>Количество проектов:</strong> ${totalProjects}</p>
+                    <p><strong>Общий объем бетона:</strong> ${totalVolume.toFixed(2)} м³</p>
+                    <p><strong>Общая стоимость всех проектов:</strong> ${totalCost.toFixed(2)} руб.</p>
+                    <p><strong>Средняя стоимость проекта:</strong> ${averageCost.toFixed(2)} руб.</p>
+                    <p><strong>Самый дорогой проект:</strong> ${maxCost.toFixed(2)} руб.</p>
+                    <p><strong>Самый дешевый проект:</strong> ${minCost.toFixed(2)} руб.</p>
+                </div>
+            `;
+        }
+
+        // Использование объекта Math для дополнительных расчетов
+        function calculateConcrete() {
+            const area = parseFloat(document.getElementById('area').value);
+            const thickness = parseFloat(document.getElementById('thickness').value);
+            
+            if (!area || !thickness) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            // Расчет объема бетона: площадь * толщина (переводим см в м)
+            const volume = area * (thickness / 100);
+            
+            // Округление до 2 знаков
+            const roundedVolume = Math.round(volume * 100) / 100;
+            
+            // Расчет необходимого количества мешков цемента (условно)
+            const cementBags = Math.ceil(volume * 7); // 7 мешков на 1 м³
+            
+            document.getElementById('concreteResult').innerHTML = `
+                <h4>Результаты расчета:</h4>
+                <p><strong>Необходимый объем бетона:</strong> ${roundedVolume} м³</p>
+                <p><strong>Примерное количество мешков цемента:</strong> ${cementBags} шт.</p>
+                <p><strong>Рекомендуемая марка бетона:</strong> М${Math.max(200, Math.min(500, Math.round(area / 10) * 50 + 200))}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
